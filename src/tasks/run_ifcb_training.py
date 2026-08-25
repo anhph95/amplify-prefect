@@ -93,7 +93,12 @@ def run_ifcb_training(ifcb_training_params: IFCBTrainingParams, ifcb_image: str)
     else:
         # Create ID file based on bin type selection
         logger.info(f'Creating ID file for {ifcb_training_params.bin_type.value}-bins')
-        temp_id_file, num_bins = create_bin_type_id_file(ifcb_training_params.data_dir, ifcb_training_params.bin_type.value)
+        temp_id_file, num_bins = create_bin_type_id_file(
+            ifcb_training_params.data_dir,
+            ifcb_training_params.bin_type.value,
+            validate_paths=ifcb_training_params.validate_bin_paths,
+            logger=logger,
+        )
         if temp_id_file is None:
             raise ValueError(f"No {ifcb_training_params.bin_type.value}-bins found in directory {ifcb_training_params.data_dir}")
         logger.info(f'Created ID file for {num_bins} {ifcb_training_params.bin_type.value}-bins: {temp_id_file}')

@@ -52,8 +52,18 @@ def ifcb_full_evaluation_flow(ifcb_full_evaluation_params: IFCBFullEvaluationPar
     logger.info("Running inference on normal data with separate I and D models...")
     
     # Create temporary ID files for I and D bins
-    temp_i_file, normal_i_bins = create_bin_type_id_file(ifcb_full_evaluation_params.normal_data_dir, "I")
-    temp_d_file, normal_d_bins = create_bin_type_id_file(ifcb_full_evaluation_params.normal_data_dir, "D")
+    temp_i_file, normal_i_bins = create_bin_type_id_file(
+        ifcb_full_evaluation_params.normal_data_dir,
+        "I",
+        validate_paths=ifcb_full_evaluation_params.validate_bin_paths,
+        logger=logger,
+    )
+    temp_d_file, normal_d_bins = create_bin_type_id_file(
+        ifcb_full_evaluation_params.normal_data_dir,
+        "D",
+        validate_paths=ifcb_full_evaluation_params.validate_bin_paths,
+        logger=logger,
+    )
     
     logger.info(f"Found {normal_i_bins} I bins and {normal_d_bins} D bins in normal data")
     

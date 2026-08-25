@@ -72,6 +72,17 @@ class IFCBTrainingParams(BaseModel):
     max_features: Union[int, float] = Field(1.0, description="Number of features to draw from X to train each base estimator")
     bin_type: BinType = Field(..., description="Type of bins to train on: 'I' for I-bins or 'D' for D-bins")
 
+    validate_bin_paths: bool = Field(
+        True,
+        description=(
+            "Only use bins located at {year}/{day}/{pid}.adc with the directories "
+            "agreeing with the PID's own date. Excludes calibration and scratch "
+            "trees (beads, temp, data_temp, skip), whose files have valid PIDs, and "
+            "excludes duplicate copies at nested paths. Set False for the previous "
+            "behaviour of taking every .adc found at any depth."
+        ),
+    )
+
     # Docker image
     ifcb_image: str = Field(
         "ghcr.io/whoigit/ifcb-flow-metric:main",
@@ -116,6 +127,17 @@ class IFCBFullEvaluationParams(BaseModel):
     i_model_path: str = Field(..., description="Path to the trained IFCB model file for I bins")
     d_model_path: str = Field(..., description="Path to the trained IFCB model file for D bins")
     output_dir: str = Field(..., description="Directory where all evaluation outputs will be saved")
+
+    validate_bin_paths: bool = Field(
+        True,
+        description=(
+            "Only use normal-data bins located at {year}/{day}/{pid}.adc with the "
+            "directories agreeing with the PID's own date. Excludes calibration and "
+            "scratch trees (beads, temp, data_temp, skip), whose files have valid "
+            "PIDs, and excludes duplicate copies at nested paths. Set False for the "
+            "previous behaviour of taking every .adc found at any depth."
+        ),
+    )
 
     # Docker image
     ifcb_image: str = Field(
