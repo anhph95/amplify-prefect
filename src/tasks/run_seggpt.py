@@ -11,7 +11,6 @@ from prefect import task
 import requests
 from PIL import Image
 
-from prov import on_task_complete
 
 
 def prepare_images(image_dir: str):
@@ -32,7 +31,7 @@ def prepare_images(image_dir: str):
     return images
 
 
-@task(on_completion=[on_task_complete])
+@task()
 def request(
     input_dir: str,
     prompt_dir: str,

@@ -5,10 +5,9 @@ from typing import List, Optional
 
 from prefect import get_run_logger
 
-from src.prov import on_task_complete
 
 
-@task(on_completion=[on_task_complete], log_prints=True)
+@task(log_prints=True)
 def merge_csv_files(csv_files: List[str], output_path: str, add_source_column: bool = False) -> str:
     """
     Merge multiple CSV files into a single CSV file.

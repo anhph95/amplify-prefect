@@ -5,7 +5,6 @@ from prefect import get_run_logger
 from prefect import task
 
 from src.params.params_onnx import ONNXInferenceParams
-from src.prov import on_task_complete
 
 DEFAULT_SCORE_OUTFILE = "{MODEL_NAME}/{SUBPATH}/{BIN}.csv"
 DEFAULT_EMBEDDINGS_OUTFILE = "{MODEL_NAME}/{SUBPATH}/{BIN}.emb.parquet"
@@ -70,7 +69,7 @@ def _build_command_args(
     return command_args
 
 
-@task(on_completion=[on_task_complete], log_prints=True)
+@task(log_prints=True)
 def run_onnx_inference(onnx_inference_params: ONNXInferenceParams, onnx_image: str):
     """
     Run inference with an ONNX model in a Docker container.

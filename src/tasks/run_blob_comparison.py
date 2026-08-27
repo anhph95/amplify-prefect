@@ -5,11 +5,10 @@ import os
 from prefect import get_run_logger
 from prefect_aws import AwsCredentials
 
-from src.prov import on_task_complete
 from src.params.params_feature_validation import FeatureValidationParams
 
 
-@task(on_completion=[on_task_complete], log_prints=True)
+@task(log_prints=True)
 def run_blob_comparison(validation_params: FeatureValidationParams):
     """
     Run IFCB blob comparison in a Docker container.

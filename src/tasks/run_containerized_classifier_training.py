@@ -4,7 +4,6 @@ from prefect import task, get_run_logger
 import docker
 from pydantic import BaseModel, Field
 
-from src.prov import on_task_complete
 from dojo.schemas import TrainingRunConfig
 
 class VolumeMapping(BaseModel):
@@ -12,7 +11,7 @@ class VolumeMapping(BaseModel):
     container_path: str = Field(..., description="Path inside the container")
     mode: Literal['ro','rw']= Field('rw', description="Mount mode: read-only ('ro') or read-write ('rw')")
 
-@task(on_completion=[on_task_complete])
+@task()
 def run_container(output_dir: str, input_volumes: List[VolumeMapping], subcommands:List[str], training_run_config: TrainingRunConfig, device_ids:List[str]=['all']):
     """
     Run Image Classifier Dojo in a Docker container.

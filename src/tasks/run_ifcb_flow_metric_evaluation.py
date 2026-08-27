@@ -4,11 +4,10 @@ import os
 
 from prefect import get_run_logger
 
-from src.prov import on_task_complete
 from src.params.params_ifcb_flow_metric import IFCBEvaluationParams
 
 
-@task(on_completion=[on_task_complete], log_prints=True)
+@task(log_prints=True)
 def run_ifcb_flow_metric_evaluation(ifcb_evaluation_params: IFCBEvaluationParams, ifcb_image: str):
     """
     Run IFCB flow metric evaluation by creating a violin plot comparing two score distributions.

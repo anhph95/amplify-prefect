@@ -4,7 +4,6 @@ import os
 
 from prefect import get_run_logger
 
-from src.prov import on_task_complete
 from src.params.params_extract_slim_features import ExtractSlimFeaturesParams, SlimFeaturesSource
 
 
@@ -93,7 +92,7 @@ def build_extract_slim_features_command(extract_features_params: ExtractSlimFeat
     return command_args
 
 
-@task(on_completion=[on_task_complete], log_prints=True)
+@task(log_prints=True)
 def run_extract_slim_features(extract_features_params: ExtractSlimFeaturesParams):
     """
     Run IFCB feature extraction in a Docker container.

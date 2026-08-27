@@ -4,10 +4,9 @@ import os
 from prefect import task
 from storage.mediastore import MediaStore
 
-from prov import on_task_complete
 
 
-@task(on_completion=[on_task_complete])
+@task()
 def upload(image_path: str, key: str):
     """
     Upload the image at the given path to the media store using the given key.

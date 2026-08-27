@@ -4,7 +4,6 @@ import os
 
 from prefect import get_run_logger
 
-from src.prov import on_task_complete
 from src.params.params_ifcb_flow_metric import IFCBTrainingParams
 from src.utils.bin_utils import create_bin_type_id_file
 
@@ -66,7 +65,7 @@ def generate_feature_config_yaml(params: IFCBTrainingParams) -> str:
 
 
 
-@task(on_completion=[on_task_complete], log_prints=True)
+@task(log_prints=True)
 def run_ifcb_training(ifcb_training_params: IFCBTrainingParams, ifcb_image: str):
     """
     Run IFCB flow metric model training in a Docker container.

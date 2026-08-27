@@ -8,11 +8,10 @@ import base64
 from prefect import get_run_logger
 from prefect.artifacts import create_markdown_artifact
 
-from src.prov import on_task_complete
 from src.params.params_feature_validation import FeatureValidationParams
 
 
-@task(on_completion=[on_task_complete], log_prints=True)
+@task(log_prints=True)
 def create_combined_validation_report(validation_params: FeatureValidationParams):
     """
     Create a single comprehensive validation report combining feature metrics and blob comparison.

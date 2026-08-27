@@ -4,7 +4,6 @@ import itertools
 from typing import List, Union
 import numpy as np
 
-from src.prov import on_task_complete
 from src.params.params_ifcb_hyperparameter_search import IFCBHyperparameterSearchParams, HyperparameterRange
 from src.params.params_ifcb_flow_metric import IFCBTrainingParams
 from src.flows.ifcb_training import ifcb_training_flow
@@ -64,7 +63,7 @@ def _create_output_subdir(base_output_dir: str, param_combo: dict) -> str:
     return subdir_path
 
 
-@task(on_completion=[on_task_complete], log_prints=True)
+@task(log_prints=True)
 def run_ifcb_hyperparameter_search(search_params: IFCBHyperparameterSearchParams):
     """
     Run IFCB hyperparameter search by training models with different parameter combinations.
