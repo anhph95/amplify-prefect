@@ -11,6 +11,7 @@ from src.params.params_stingray_image_analysis import (
     ImageAbundanceParams,
     StingrayCruiseParams,
 )
+from src.utils.output_dir_utils import create_output_dir
 
 
 CONTAINER_CONFIG = "/run/cruise.conf.sh"
@@ -165,10 +166,11 @@ def run_image_abundance(
     abundance_params: ImageAbundanceParams,
 ) -> None:
     """Merge detection labels and compute abundance from Prefect UI parameters."""
+    logger = get_run_logger()
     stingray_root = _existing_path(cruise_params.stingray_data_root, "Stingray data root", True)
     class_yaml = _existing_path(abundance_params.class_yaml, "Class YAML", False)
     workspace = Path(abundance_params.workspace_dir).expanduser().resolve()
-    workspace.mkdir(parents=True, exist_ok=True)
+    create_output_dir(str(workspace), logger=logger)
 
     if abundance_params.merge_labels and not abundance_params.label_dirs:
         raise ValueError("label_dirs must contain at least one directory when merge_labels is enabled")
