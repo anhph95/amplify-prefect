@@ -82,6 +82,16 @@ source .env
 python src/flows/extract_slim_features.py
 ```
 
+**For Stingray Frame Timestamps and Image Abundance:**
+
+```bash
+source .venv/bin/activate
+source .env
+# Run each deployment in its own terminal.
+python src/flows/stingray_frame_timestamps.py
+python src/flows/stingray_image_abundance.py
+```
+
 ## Using the Workflows
 
 Navigate to the Prefect UI in your browser at `http://{EXTERNAL_HOST_NAME}:4200`
@@ -181,6 +191,35 @@ The slim feature extraction workflow supports two extraction sources:
 - `feature_storage_mode`: Feature storage mode for `storage` source, either `local` or `vastdb`
 - `vastdb_bucket`, `vastdb_schema`, `vastdb_table`, `vastdb_url`: VastDB settings for `storage` source
 - `batch_processing`, `min_batch_size`, `max_batch_size`, `gpu_device`: GPU batch-processing settings for `storage` source
+
+### Stingray Image Analysis Workflows
+
+The timestamp and abundance deployments accept their cruise settings directly in
+the Prefect UI. Prefect creates the container configuration for the run; users do
+not need to place a cruise configuration file on the host or in the image-analysis
+repository.
+
+**StingrayCruiseParams:**
+
+- `cruise`, `cruise_date`, `cruise_collection`, `camera_stream`: identify the cruise media
+- `stingray_data_root`: host root containing media lists and dashboard data
+- `video_suffix`, `timestamp_mode`, `sensor_dataset`, `abundance_dataset`: shared artifact settings
+- `image`: image-analysis container image
+
+**FrameTimestampParams:**
+
+- `video_data_root`: host root containing cruise video directories
+- `file_limit`: optional test limit; empty scans all videos
+- `max_workers`: optional worker count; empty uses all available CPUs
+
+**ImageAbundanceParams:**
+
+- `workspace_dir`: host directory for intermediate image-abundance products
+- `class_yaml`: host model class-name YAML
+- `label_dirs`: host prediction-label directories to merge
+- `merge_labels`: merge labels before abundance processing
+- `score_thresh`, `bin_width`, `volume_per_frame`, `add_ci`: abundance controls
+- `jobs`: optional label-conversion worker count
 
 ## YOLO Training Data Format
 
