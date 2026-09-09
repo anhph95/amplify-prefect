@@ -27,7 +27,7 @@ class StingrayCruiseParams(BaseModel):
 class FrameTimestampParams(BaseModel):
     video_data_root: str = Field(..., description="Host directory containing cruise video collections")
     file_limit: int | None = Field(None, gt=0, description="Maximum videos to scan; empty scans every video")
-    max_workers: int | None = Field(None, gt=0, description="Parallel timestamp workers; empty uses all available CPUs")
+    max_workers: int | None = Field(None, gt=0, description="Parallel timestamp workers; empty uses the visible CPU count minus one")
 
 
 class ImageAbundanceParams(BaseModel):
@@ -39,4 +39,4 @@ class ImageAbundanceParams(BaseModel):
     bin_width: int = Field(5, gt=0, description="Abundance time-bin width")
     volume_per_frame: float = Field(0.00225, gt=0.0, description="Sample volume represented by one frame")
     add_ci: bool = Field(False, description="Add confidence intervals to abundance output")
-    jobs: int | None = Field(None, gt=0, description="Parallel label-conversion jobs; empty uses all available CPUs")
+    jobs: int | None = Field(None, gt=0, description="Parallel label-conversion jobs; empty uses the visible CPU count minus one")

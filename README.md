@@ -210,7 +210,7 @@ repository.
 
 - `video_data_root`: host root containing cruise video directories
 - `file_limit`: optional test limit; empty scans all videos
-- `max_workers`: optional worker count; empty uses all available CPUs
+- `max_workers`: optional timestamp worker count; empty uses the visible CPU count minus one
 
 **ImageAbundanceParams:**
 
@@ -219,7 +219,7 @@ repository.
 - `label_dirs`: host prediction-label directories to merge
 - `merge_labels`: merge labels before abundance processing
 - `score_thresh`, `bin_width`, `volume_per_frame`, `add_ci`: abundance controls
-- `jobs`: optional label-conversion worker count
+- `jobs`: optional label-conversion worker count; empty uses the visible CPU count minus one
 
 ## YOLO Training Data Format
 

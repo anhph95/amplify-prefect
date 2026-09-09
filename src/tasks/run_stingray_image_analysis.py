@@ -85,12 +85,20 @@ def _run_container(
     script: str,
     config_lines: list[str],
     volumes: dict[str, dict[str, str]],
+    worker_count: int | None = None,
 ) -> None:
     """Run one canonical image-analysis shell job and stream its output."""
     logger = get_run_logger()
     config_path = _write_config(config_lines)
     volumes[str(config_path)] = {"bind": CONTAINER_CONFIG, "mode": "ro"}
     client = docker.from_env()
+    resource_options: dict[str, object] = {}
+    if worker_count is not None:
+        cpu_count = worker_count + 1
+        resource_options = {
+            "environment": {"STINGRAY_CPU_COUNT": str(cpu_count)},
+            "nano_cpus": cpu_count * 1_000_000_000,
+        }
 
     logger.info("Running %s from %s", script, image)
     try:
@@ -105,6 +113,7 @@ def _run_container(
             stdout=True,
             stderr=True,
             stream=True,
+            **resource_options,
         )
         for line in output:
             logger.info(line.decode("utf-8").rstrip())
@@ -146,6 +155,7 @@ def run_frame_timestamps(
         "frame_timestamps.sh",
         config_lines,
         volumes,
+        timestamp_params.max_workers,
     )
 
 
@@ -196,4 +206,5 @@ def run_image_abundance(
         "image_abundance.sh",
         config_lines,
         volumes,
+        abundance_params.jobs,
     )
