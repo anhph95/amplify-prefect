@@ -3,7 +3,7 @@ from enum import Enum
 from pydantic import BaseModel, Field
 
 
-DEFAULT_IMAGE = "ghcr.io/anhph95/stingray-image-analysis:latest"
+DEFAULT_IMAGE = "ghcr.io/whoigit/stingray-image-analysis:latest"
 
 
 class TimestampMode(str, Enum):
